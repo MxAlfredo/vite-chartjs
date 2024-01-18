@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Chart, ChartConfiguration, ChartData, ChartItem } from 'chart.js/auto';
 
+const numberOfDecimals = ref(2);
 // labels 1 o 30
-const labels = Array.from({length: 30}, (_, i) => i + 1);
+const labels = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
 const data: ChartData = {
   labels,
   datasets: [{
@@ -60,7 +61,8 @@ const config: ChartConfiguration = {
         min: 0,
         ticks: {
           callback: (value) => {
-            return `${value} %`;
+            const decimals = parseFloat(value.toString()).toFixed(numberOfDecimals.value);
+            return `${decimals} %`;
           }
         },
         title: {
