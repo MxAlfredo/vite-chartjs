@@ -2,7 +2,8 @@
 <script setup lang="js">
 import { onMounted, ref, watch } from 'vue';
 import { Chart } from 'chart.js/auto';
-import { opcionesDisponibilidad, opcionesDecimales, response, responseTwo } from "../mock/WeightedDailyUnavailability";
+import { opcionesDisponibilidad, opcionesDecimales } from "../mock/Constants";
+import { response, responseTwo } from "../mock/WeightedDailyUnavailability";
 import { externalTooltipPercentage, extraLegendSpacePlugin } from '../utils/chartjs';
 
 const colorLine = '#F8CD51';
