@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import AnnualActivityChart from './components/AnnualActivityChart.vue';
-import UnavailabilityPerDayChart from './components/UnavailabilityPerDayChart.vue';
-import UnavailabilityPerMonthChart from './components/UnavailabilityPerMonthChart.vue';
+import WeightedDailyUnavailability from './components/WeightedDailyUnavailability.vue';
 </script>
 
 <template>
@@ -14,9 +12,7 @@ import UnavailabilityPerMonthChart from './components/UnavailabilityPerMonthChar
     </a>
   </div>
 
-  <AnnualActivityChart />
-  <UnavailabilityPerMonthChart />
-  <UnavailabilityPerDayChart />
+  <WeightedDailyUnavailability />
 </template>
 
 <style scoped>
