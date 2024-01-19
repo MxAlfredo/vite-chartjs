@@ -2,7 +2,7 @@
 <script setup lang="js">
 import { onMounted, ref, watch } from 'vue';
 import { Chart } from 'chart.js/auto';
-import { opcionesDisponibilidad, opcionesDecimales } from "../mock/Constants";
+import { opcionesDisponibilidad, opcionesDecimales } from "../utils/Constants";
 import { response, responseTwo } from "../mock/WeightedDailyUnavailability";
 import { externalTooltipPercentage, extraLegendSpacePlugin } from '../utils/chartjs';
 
