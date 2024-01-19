@@ -8,7 +8,7 @@ const getOrCreateLegendList = (chart, id) => {
         listContainer.style.flexDirection = 'row';
         listContainer.style.margin = 0;
         listContainer.style.padding = 0;
-
+        listContainer.style.justifyContent = 'space-between';
         legendContainer.appendChild(listContainer);
     }
 
@@ -39,6 +39,7 @@ const htmlLegendPlugin = {
             ul.firstChild.remove();
         }
 
+        ul.style.fontSize = '.8rem';
         // Reuse the built-in legendItems generator
         const items = chart.options.plugins.legend.labels.generateLabels(chart);
 
@@ -68,9 +69,9 @@ const htmlLegendPlugin = {
             boxSpan.style.borderWidth = item.lineWidth + 'px';
             boxSpan.style.display = 'inline-block';
             boxSpan.style.flexShrink = 0;
-            boxSpan.style.height = '20px';
+            boxSpan.style.height = '10px';
             boxSpan.style.marginRight = '10px';
-            boxSpan.style.width = '20px';
+            boxSpan.style.width = '10px';
 
             // Text
             const textContainer = document.createElement('p');
@@ -106,10 +107,11 @@ const typeTooltip = Object.freeze({
 });
 
 const getOrCreateTooltip = (chart) => {
-    let tooltipEl = chart.canvas.parentNode.querySelector('div');
+    let tooltipEl = chart.canvas.parentNode.querySelector('div.chartjs-tooltip');
 
     if (!tooltipEl) {
         tooltipEl = document.createElement('div');
+        tooltipEl.classList.add('chartjs-tooltip');
         tooltipEl.style.background = '#004481';
         tooltipEl.style.borderRadius = '3px';
         tooltipEl.style.color = 'white';
@@ -196,5 +198,27 @@ const externalTooltipPercentage = (context) => {
     externalTooltipHandler(context, typeTooltip.Porcentaje);
 };
 
+const htmlLegendWhitSummationPlugin = {
+    id: 'htmlLegendWhitSummation',
+    afterUpdate(chart) {
+        const legendContainer = document.getElementById('legend-container');
+        const listContainer = getOrCreateLegendList(chart, 'legend-container');
+        const ul = listContainer;
+        
+        // only first dataset
+        const firstDataset = chart.data.datasets[0];
+        const total = firstDataset.data.reduce((a, b) => a + b, 0);
+        const text = document.createTextNode(`Indisponibilidad Acumulada Mensual (Σ) ${total.toFixed(2)} %`);
+        const li = document.createElement('li');
+        li.style.alignItems = 'center';
+        li.style.cursor = 'pointer';
+        li.style.display = 'flex';
+        li.style.flexDirection = 'row';
+        li.style.marginLeft = '10px';
+        li.appendChild(text);
+        ul.appendChild(li);
+    }
+};
 
-export { htmlLegendPlugin, extraLegendSpacePlugin, externalTooltipPercentage };
+
+export { htmlLegendPlugin, extraLegendSpacePlugin, externalTooltipPercentage, htmlLegendWhitSummationPlugin };

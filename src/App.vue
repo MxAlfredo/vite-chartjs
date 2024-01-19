@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WeightedDailyUnavailability from './components/WeightedDailyUnavailability.vue';
+import WeightedDailyUnavailabilityAndCumulativeUnavailability from './components/WeightedDailyUnavailabilityAndCumulativeUnavailability.vue';
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import WeightedDailyUnavailability from './components/WeightedDailyUnavailabilit
   </div>
 
   <WeightedDailyUnavailability />
+  <WeightedDailyUnavailabilityAndCumulativeUnavailability />
 </template>
 
 <style scoped>
