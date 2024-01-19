@@ -15,7 +15,8 @@ const response = {
     { day: 11, value1: 0.120, value2: 0.238 },
     { day: 12, value1: 0.130, value2: 0.181 },
   ],
-  exceedsTheGoal: false
+  exceedsTheGoal: false,
+  summation: 1.53,
 
 };
 
@@ -55,7 +56,8 @@ const responseTwo = {
     { day: 29, value1: 0.120, value2: 0.238 },
     { day: 30, value1: 0.130, value2: 0.181 },
   ],
-  exceedsTheGoal: true
+  exceedsTheGoal: true,
+  summation: 3.87,
 };
 
 export { response, responseTwo };
