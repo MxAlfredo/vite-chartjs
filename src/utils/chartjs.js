@@ -161,7 +161,7 @@ const externalTooltipHandler = (context, type) => {
             } else {
                 text = document.createTextNode(`${value}`);
             }
-            
+
             td.appendChild(text);
             tr.appendChild(td);
             tableBody.appendChild(tr);
@@ -202,13 +202,13 @@ const htmlLegendWhitSummationPlugin = {
     id: 'htmlLegendWhitSummation',
     afterUpdate(chart, args, options) {
         const ul = getOrCreateLegendList(chart, options.containerID);
-        
+
         // only first dataset
         const firstDataset = chart.data.datasets[0];
         const total = firstDataset.data.reduce((a, b) => a + b, 0);
         const icon = options.exceedsTheGoal ? '✓' : '✗';
         const title = options.title;
-        
+
         const text = document.createTextNode(`${title} (Σ) ${total.toFixed(2)} % ${icon}`);
         const li = document.createElement('li');
         li.style.alignItems = 'center';
@@ -221,5 +221,39 @@ const htmlLegendWhitSummationPlugin = {
     }
 };
 
+const htmlLegendWhitSummationDoublePlugin = {
+    id: 'htmlLegendWhitSummationDouble',
+    afterUpdate(chart, args, options) {
+        const ul = getOrCreateLegendList(chart, options.containerID);
 
-export { htmlLegendPlugin, extraLegendSpacePlugin, externalTooltipPercentage, htmlLegendWhitSummationPlugin };
+        // only first dataset
+        const firstDataset = chart.data.datasets[0];
+        const total = firstDataset.data.reduce((a, b) => a + b, 0);
+        const total2 = chart.data.datasets[1].data.reduce((a, b) => a + b, 0);
+
+        const text = document.createTextNode(`Acumulado actividad (Σ) ${total.toFixed(2)} %`);
+        const text2 = document.createTextNode(`Acumulado errores (Σ) ${total2.toFixed(2)} %`);
+
+        const li = document.createElement('li');
+        li.style.alignItems = 'center';
+        li.style.cursor = 'pointer';
+        li.style.display = 'flex';
+        li.style.flexDirection = 'row';
+        li.style.marginLeft = '10px';
+        li.appendChild(text);
+
+        const li2 = document.createElement('li');
+        li2.style.alignItems = 'center';
+        li2.style.cursor = 'pointer';
+        li2.style.display = 'flex';
+        li2.style.flexDirection = 'row';
+        li2.style.marginLeft = '10px';
+        li2.appendChild(text2);
+
+        ul.appendChild(li);
+        ul.appendChild(li2);
+    }
+};
+
+
+export { htmlLegendPlugin, extraLegendSpacePlugin, externalTooltipPercentage, htmlLegendWhitSummationPlugin, htmlLegendWhitSummationDoublePlugin };
