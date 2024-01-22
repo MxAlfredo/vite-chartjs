@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DailyActivity from './components/DailyActivity.vue';
+import MonthlyActivity from './components/MonthlyActivity.vue';
 import MonthlyAvailability from './components/MonthlyAvailability .vue';
 import WeightedDailyUnavailability from './components/WeightedDailyUnavailability.vue';
 import WeightedDailyUnavailabilityAndCumulativeUnavailability from './components/WeightedDailyUnavailabilityAndCumulativeUnavailability.vue';
@@ -19,6 +20,7 @@ import WeightedDailyUnavailabilityAndCumulativeUnavailability from './components
   <WeightedDailyUnavailabilityAndCumulativeUnavailability />
   <DailyActivity />
   <MonthlyAvailability />
+  <MonthlyActivity />
 </template>
 
 <style scoped>
