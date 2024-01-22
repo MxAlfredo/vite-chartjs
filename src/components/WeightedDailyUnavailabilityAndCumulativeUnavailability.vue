@@ -14,6 +14,8 @@ const typeDisponibilidad = ref(opcionesDisponibilidad.Disponibilidad);
 const numberOfDecimals = ref(opcionesDecimales.Dos);
 const changeValues = ref(false);
 
+const exceedsTheGoal = ref(response.exceedsTheGoal);
+
 const labels = [];
 const values = {
   acumulated: [],
@@ -65,16 +67,14 @@ const generateChart = () => {
         //   text: `${typeDisponibilidad.value} mensual`,
         // },
         htmlLegend: {
-          containerID: 'legend-container',
+          containerID: 'legendContainerWDUACU',
+        },
+        htmlLegendWhitSummation: {
+          exceedsTheGoal: exceedsTheGoal.value,
+          containerID: 'legendContainerWDUACU',
+          title: `${typeDisponibilidad.value} Acumulada Mensual `,
         },
         legend: {
-          // align: 'start',
-          // labels: {
-          //   boxHeight: 10,
-          //   boxPadding: 10,
-          //   boxWidth: 10,
-          //   padding: 20,
-          // },
           display: false,
         },
         tooltip: {
@@ -133,11 +133,13 @@ const updateChart = (chart, labels, newData) => {
   chart.data.datasets[0].label = `${typeDisponibilidad.value} acumulada`;
   chart.data.datasets[1].label = `Contribución del día en el mes`;
   chart.options.plugins.title.text = `${typeDisponibilidad.value} mensual`;
+  chart.options.plugins.htmlLegendWhitSummation.title = `${typeDisponibilidad.value} Acumulada Mensual `
   chart.options.scales.y.ticks.callback = (value) => {
     const decimals = parseFloat(value.toString()).toFixed(numberOfDecimals.value);
     return `${decimals} %`;
   }
   chart.options.scales.y.title.text = `% ${typeDisponibilidad.value}.`;
+  chart.options.plugins.htmlLegendWhitSummation.exceedsTheGoal = exceedsTheGoal.value;
   chart.update();
 }
 
@@ -149,8 +151,10 @@ watch([typeDisponibilidad, numberOfDecimals], () => {
       acumulated: responseTwo.values.map(row => row.value1),
       daily: responseTwo.values.map(row => row.value2),
     }
+    exceedsTheGoal.value = responseTwo.exceedsTheGoal
     updateChart(myChart, labels, values);
   } else {
+    exceedsTheGoal.value = response.exceedsTheGoal
     updateChart(myChart, labels, values);
   }
 });
@@ -174,7 +178,7 @@ watch([typeDisponibilidad, numberOfDecimals], () => {
   <div class="chart-container">
     <!-- Titulo -->
     <div class="chart-title"> {{ typeDisponibilidad }} mensual </div>
-    <div id="legend-container"></div>
+    <div id="legendContainerWDUACU"></div>
     <canvas id="weightedDailyUnavailabilityAndCumulativeUnavailability"> </canvas>
   </div>
 </template>

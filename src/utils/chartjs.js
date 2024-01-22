@@ -200,15 +200,16 @@ const externalTooltipPercentage = (context) => {
 
 const htmlLegendWhitSummationPlugin = {
     id: 'htmlLegendWhitSummation',
-    afterUpdate(chart) {
-        const legendContainer = document.getElementById('legend-container');
-        const listContainer = getOrCreateLegendList(chart, 'legend-container');
-        const ul = listContainer;
+    afterUpdate(chart, args, options) {
+        const ul = getOrCreateLegendList(chart, options.containerID);
         
         // only first dataset
         const firstDataset = chart.data.datasets[0];
         const total = firstDataset.data.reduce((a, b) => a + b, 0);
-        const text = document.createTextNode(`Indisponibilidad Acumulada Mensual (Σ) ${total.toFixed(2)} %`);
+        const icon = options.exceedsTheGoal ? '✓' : '✗';
+        const title = options.title;
+        
+        const text = document.createTextNode(`${title} (Σ) ${total.toFixed(2)} % ${icon}`);
         const li = document.createElement('li');
         li.style.alignItems = 'center';
         li.style.cursor = 'pointer';
