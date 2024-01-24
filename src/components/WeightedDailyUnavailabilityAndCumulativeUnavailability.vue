@@ -57,6 +57,11 @@ const generateChart = () => {
     data: data,
     responsive: true,
     options: {
+      interaction: {
+        intersect: false,
+        mode: 'nearest',
+        axis: 'xy',
+      },
       plugins: {
         // title: {
         //   align: 'start',
