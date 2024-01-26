@@ -48,9 +48,6 @@ const generateChart = () => {
         axis: 'xy',
       },
       plugins: {
-        htmlLegend: {
-          containerID: 'legendContainerWDU',
-        },
         legend: {
           display: false,
         },
@@ -87,20 +84,28 @@ const generateChart = () => {
         },
       },
     },
-    plugins: [
-      extraLegendSpacePlugin,
-      htmlLegendPlugin,
-    ],
-
   };
 
   const ctx = document.getElementById('weightedDailyUnavailability');
   myChart = new Chart(ctx, config);
 }
 
+let legendItems = ref([]);
+
+const updateLegendItems = () => {
+  legendItems.value = myChart.options.plugins.legend.labels.generateLabels(myChart);
+}
+
 onMounted(() => {
   generateChart();
+  updateLegendItems();
 });
+
+const updateLegendItem = (item) => {
+  myChart.setDatasetVisibility(item.datasetIndex, !myChart.isDatasetVisible(item.datasetIndex));
+  myChart.update();
+  updateLegendItems();
+}
 
 const updateChart = (chart, labels, newData) => {
   chart.data.labels = labels;
@@ -143,7 +148,33 @@ watch([typeDisponibilidad, numberOfDecimals], () => {
   </select>
 
   <div class="chart-container">
-    <div class="chart-title"> {{ typeDisponibilidad }} del día desponerado </div>
+    <div class="chart-title">{{ typeDisponibilidad }} del día desponerado</div>
+    <div class="chart-legend">
+      <ul class="legend-items">
+        <li
+          class="legend-item"
+          v-for="legendItem in legendItems"
+          :key="legendItem"
+          @click="updateLegendItem(legendItem)"
+        >
+          <span
+            class="legend-color"
+            :style="{ backgroundColor: legendItem.fillStyle }"
+          ></span>
+          <p
+            class="legend-label"
+            :style="{
+              textDecoration: legendItem.hidden ? 'line-through' : 'none',
+            }"
+          >
+            {{ legendItem.text }}
+          </p>
+        </li>
+      </ul>
+      <div class="legend-total">
+        <div class="legend-total-item">Total</div>
+      </div>
+    </div>
     <div id="legendContainerWDU"></div>
     <canvas id="weightedDailyUnavailability"> </canvas>
   </div>
@@ -154,11 +185,51 @@ watch([typeDisponibilidad, numberOfDecimals], () => {
   height: auto;
   width: 800px;
 }
+
 .chart-title {
-  font-size: .8rem;
+  font-size: 0.8rem;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.chart-legend {
+  font-size: 0.7rem;
   font-weight: bold;
   text-align: left;
   margin-bottom: 10px;
-  color: rgb(102, 102, 102);
+  display: flex;
+  justify-content: space-between;
 }
+
+.legend-items {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  gap: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.legend-label {
+  font-size: 0.6rem;
+}
+.legend-total {
+  display: flex;
+  gap: 10px;
+}
+.legend-total-item {
+  font-size: 0.6rem;
+  font-weight: bolder;
+}
+
 </style>

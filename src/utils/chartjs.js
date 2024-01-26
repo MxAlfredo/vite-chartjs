@@ -104,7 +104,7 @@ const getOrCreateTooltip = (chart) => {
         tooltipEl.style.opacity = 1;
         tooltipEl.style.pointerEvents = 'none';
         tooltipEl.style.position = 'absolute';
-        tooltipEl.style.transform = 'translate(-50%, 0)';
+        tooltipEl.style.transform = 'translate(0%, 0)';
         tooltipEl.style.transition = 'all .1s ease';
 
         const table = document.createElement('table');
