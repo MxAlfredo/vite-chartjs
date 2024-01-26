@@ -111,12 +111,12 @@ const updateChart = (chart, labels, newData) => {
   chart.data.labels = labels;
   chart.data.datasets[0].data = newData;
   chart.data.datasets[0].label = `${typeDisponibilidad.value} desponerada del día`;
-  chart.options.plugins.title.text = `${typeDisponibilidad.value} del día desponerado`;
   chart.options.scales.y.ticks.callback = (value) => {
     const decimals = parseFloat(value.toString()).toFixed(numberOfDecimals.value);
     return `${decimals} %`;
   }
   chart.options.scales.y.title.text = `% ${typeDisponibilidad.value}.`;
+  updateLegendItems();
   chart.update();
 }
 
