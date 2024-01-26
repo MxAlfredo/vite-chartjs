@@ -4,7 +4,7 @@ import { onMounted, ref, watch } from 'vue';
 import { Chart } from 'chart.js/auto';
 import { opcionesDisponibilidad, opcionesDecimales } from "../utils/Constants";
 import { response, responseTwo } from "../mock/WeightedDailyUnavailability";
-import { externalTooltipPercentage, extraLegendSpacePlugin } from '../utils/chartjs';
+import { externalTooltipPercentage, extraLegendSpacePlugin, htmlLegendPlugin } from '../utils/chartjs';
 
 const colorLine = '#F8CD51';
 let myChart = null;
@@ -48,39 +48,16 @@ const generateChart = () => {
         axis: 'xy',
       },
       plugins: {
-        title: {
-          align: 'start',
-          display: true,
-          padding: {
-            top: 10,
-          },
-          text: `${typeDisponibilidad.value} del día desponerado`,
+        htmlLegend: {
+          containerID: 'legendContainerWDU',
         },
         legend: {
-          align: 'start',
-          labels: {
-            boxHeight: 10,
-            boxPadding: 10,
-            boxWidth: 10,
-            padding: 20,
-          }
+          display: false,
         },
         tooltip: {
           enabled: false,
           position: 'nearest',
           external: externalTooltipPercentage,
-          // callbacks: {
-          //   label: function (context) {
-          //     let label = '';
-          //     if (context.parsed.y !== null) {
-          //       label += context.parsed.y + '%';
-          //     }
-          //     return label;
-          //   },
-          //   title: function (context) {
-          //     return '';
-          //   }
-          // },
         }
       },
       scales: {
@@ -112,6 +89,7 @@ const generateChart = () => {
     },
     plugins: [
       extraLegendSpacePlugin,
+      htmlLegendPlugin,
     ],
 
   };
@@ -165,6 +143,8 @@ watch([typeDisponibilidad, numberOfDecimals], () => {
   </select>
 
   <div class="chart-container">
+    <div class="chart-title"> {{ typeDisponibilidad }} del día desponerado </div>
+    <div id="legendContainerWDU"></div>
     <canvas id="weightedDailyUnavailability"> </canvas>
   </div>
 </template>
@@ -173,5 +153,12 @@ watch([typeDisponibilidad, numberOfDecimals], () => {
 .chart-container {
   height: auto;
   width: 800px;
+}
+.chart-title {
+  font-size: .8rem;
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 10px;
+  color: rgb(102, 102, 102);
 }
 </style>

@@ -15,20 +15,6 @@ const getOrCreateLegendList = (chart, id) => {
     return listContainer;
 };
 
-// Se configura en las opciones del chart para no mostrar la leyenda por defecto
-// const config = {
-//     options: {
-//         plugins: {
-//             htmlLegend: {
-//                 containerID: 'legend-container',
-//             },
-//             legend: {
-//                 display: false,
-//             }
-//         }
-//     }
-// }
-// <div id="legend-container"></div>
 const htmlLegendPlugin = {
     id: 'htmlLegend',
     afterUpdate(chart, args, options) {
@@ -66,12 +52,12 @@ const htmlLegendPlugin = {
             const boxSpan = document.createElement('span');
             boxSpan.style.background = item.fillStyle;
             boxSpan.style.borderColor = item.strokeStyle;
-            boxSpan.style.borderWidth = item.lineWidth + 'px';
+            boxSpan.style.borderWidth = '0px';
             boxSpan.style.display = 'inline-block';
             boxSpan.style.flexShrink = 0;
-            boxSpan.style.height = '10px';
-            boxSpan.style.marginRight = '10px';
-            boxSpan.style.width = '10px';
+            boxSpan.style.height = '16px';
+            boxSpan.style.marginRight = '8px';
+            boxSpan.style.width = '16px';
 
             // Text
             const textContainer = document.createElement('p');
